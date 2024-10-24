@@ -16,3 +16,4 @@ Follow this steps:
 ```
 
 ## Opening notebooks from github
+As simple as that:
