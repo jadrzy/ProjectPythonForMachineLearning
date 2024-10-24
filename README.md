@@ -7,6 +7,15 @@ Follow this steps:
   <img src="https://github.com/jadrzy/PythonForMachineLearning/blob/main/images/Token.png" 
        width=400/>
 </p>
+
+```
+function test() {
+  console.log("notice the blank line before this function?");
+}
+```
+
+
+
 - clone repository into collab
 ```
 !git clone https://{token}@github.com/jadrzy/PythonForMachineLearning.git
