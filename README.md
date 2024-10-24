@@ -3,5 +3,7 @@
 Follow this steps:
 - create an access token for your account on github
 - add token to your collab:
+<p align="center">
+  <img src="https://github.com/jadrzy/PythonForMachineLearning/blob/main/images/Token.png" />
+</p>
 
-![alt text](https://github.com/jadrzy/PythonForMachineLearning/blob/main/images/Token.png)
