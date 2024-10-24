@@ -5,6 +5,7 @@ Follow this steps:
 - add token to your collab:
 <p align="left">
   <img src="https://github.com/jadrzy/PythonForMachineLearning/blob/main/images/Token.png" 
-       width=400/>
+       width=400
+       margin-left=20/>
 </p>
 
