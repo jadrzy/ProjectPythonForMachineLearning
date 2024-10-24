@@ -6,6 +6,6 @@ Follow this steps:
 <p>
   <img src="https://github.com/jadrzy/PythonForMachineLearning/blob/main/images/Token.png" 
        width=400
-       margin-left=200/>
+       margin-left=20px/>
 </p>
 
