@@ -41,8 +41,9 @@ Using basic git commands such as:
 Using colab embedded functions:
 <p>
   <img src="https://github.com/jadrzy/PythonForMachineLearning/blob/main/images/push_git_1.png" 
-       width=600/>
+       width=400/>
 </p>
+
 <p>
   <img src="https://github.com/jadrzy/PythonForMachineLearning/blob/main/images/push_git_2.png" 
        width=600/>
