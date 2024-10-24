@@ -8,14 +8,6 @@ Follow this steps:
        width=400/>
 </p>
 
-```
-function test() {
-  console.log("notice the blank line before this function?");
-}
-```
-
-
-
 - clone repository into collab
 ```
 !git clone https://{token}@github.com/jadrzy/PythonForMachineLearning.git
