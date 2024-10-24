@@ -9,7 +9,7 @@ Follow this steps:
        width=400/>
 </p>
 
-- clone repository into collab
+- clone repository into collab (this line should be executed at the start of every notebook):
 ```
 !git clone https://{token}@github.com/jadrzy/PythonForMachineLearning.git
 ```
