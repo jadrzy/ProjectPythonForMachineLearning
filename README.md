@@ -17,3 +17,7 @@ Follow this steps:
 
 ## Opening notebooks from github
 As simple as that:
+<p>
+  <img src="https://github.com/jadrzy/PythonForMachineLearning/blob/main/images/github_hint.png" 
+       width=400/>
+</p>
