@@ -37,3 +37,13 @@ Using basic git commands such as:
 !git commit -m <info>
 !git push https://{token}@github.com/jadrzy/PythonForMachineLearning.git <branch>
 ```
+### Second approach
+Using colab embedded functions:
+<p>
+  <img src="https://github.com/jadrzy/PythonForMachineLearning/blob/main/images/push_git_1.png" 
+       width=600/>
+</p>
+<p>
+  <img src="https://github.com/jadrzy/PythonForMachineLearning/blob/main/images/push_git_2.png" 
+       width=600/>
+</p>
