@@ -19,5 +19,5 @@ Follow this steps:
 As simple as that:
 <p>
   <img src="https://github.com/jadrzy/PythonForMachineLearning/blob/main/images/github_hint.png" 
-       width=400/>
+       width=600/>
 </p>
