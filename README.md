@@ -28,3 +28,12 @@ Github account connection is mandatory. To open any notebook within this reposit
   <img src="https://github.com/jadrzy/PythonForMachineLearning/blob/main/images/colab_hint.png" 
        width=600/>
 </p>
+
+## Pushing files into github
+### First approach
+Using basic git commands such as:
+```
+!git add .
+!git commit -m <info>
+!git push https://{token}@github.com/jadrzy/PythonForMachineLearning.git <branch>
+```
