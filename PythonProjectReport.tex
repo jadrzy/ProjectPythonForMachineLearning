@@ -1,0 +1,853 @@
+%% źródła
+\documentclass{article}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{mcodeMultipleAuthors}
+\usepackage{csquotes}
+\usepackage{url}
+\usepackage{siunitx}
+
+
+\usepackage{caption}
+\captionsetup[table]{labelformat=empty}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{18pt}
+\title{mcode.sty}
+
+
+\captionsetup[figure]{labelformat=empty}
+
+%% ODPOWIEDNIO UZUPEŁNIĆ %%%%%%%%%
+\begin{document}
+
+\przedmiot{Python for machine learning and data science}
+\tytul{How Cannabis Use Influences the Choice and Use}
+\podtytul{of Other Psychoactive Substances}
+\kierunek{Inżynieria Mechatroniczna}
+\autorb{Jakub Zając}
+\autorc{Michał Napiórkowski}
+\autora{Jan Drzyzga}
+
+\data{Kraków, 21.11.2024}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\stronatytulowa{}
+\newpage
+\renewcommand*\contentsname{Table of Contents}
+\tableofcontents{}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% INTRODUCTION %
+\title{How Cannabis Use Influences the Choice and Use of Other Psychoactive Substances}
+
+
+\section{Introduction}
+\hspace{1cm}The impact of cannabis use on the decision to use other psychoactive substances has been the focus of numerous studies and social debates, particularly as public policies and societal norms around drug use evolve. With the growing momentum for cannabis legalization across various countries and regions, concerns about its potential to act as a ``gateway'' to more harmful substances, such as opioids, stimulants, or hallucinogens, have intensified. This issue extends beyond public health concerns and is highly relevant to policymakers who must weigh the benefits of legalization—including reduced criminal activity, increased tax revenue, and better access to regulated products—against the potential risks of heightened substance use.
+
+\hspace{1cm}Understanding the relationship between cannabis use and its possible links to other psychoactive substances is vital for creating targeted prevention and intervention strategies. While a considerable body of research has been conducted on the topic, the scientific community remains divided on whether cannabis use truly leads to the use of more dangerous drugs or if cannabis users are simply more predisposed to engage in risky behaviors overall. Variables such as age, gender, socio-economic status, education, and the legal context of cannabis in a given region can all significantly shape these outcomes.
+
+\hspace{1cm}This project, aims to investigate the correlation between cannabis use and the consumption of other psychoactive substances, exploring the role cannabis might play as a stepping stone in the progression to further drug use. Additionally, the influence of personal attributes in shaping cannabis consumption will be examined. By examining psychological and behavioral factors, this study aims to provide a deeper understanding of the underlying drivers of drug use and addiction. The findings are intended to contribute to a more comprehensive and objective perspective on the issue.
+
+\section{Dataset Description and Related Work}
+\subsection{Description}
+
+\hspace{1cm}The dataset used in this project is the Drug Consumption (Quantified) dataset, which is openly accessible via the UCI Machine Learning Repository. This dataset was compiled through a survey designed to assess patterns of drug consumption alongside a range of associated demographic and behavioral factors, including psychological traits and socio-demographic characteristics. The dataset offers a valuable resource for exploring the relationships between individual attributes and drug use behaviors, making it highly relevant to studies on substance use and its predictors. ``The database was collected by Elaine Fehrman between March 2011 and March 2012.
+In January 2011, the research proposal was approved by the University of Leicester’s
+Forensic Psychology Ethical Advisory Group, and subsequently received favourable
+opinion from the University of Leicester School of Psychology’s Research Ethics
+Committee (PREC).[1]''
+
+\subsection{Data Acquisition Method}
+\hspace{1cm}``The database was collected by an anonymous online survey
+methodology by Elaine Fehrman yielding 2051 respondents. The database is available
+online. Twelve attributes are known for each respondent: personality
+measurements which include N, E, O, A, and C scores from NEO-FFI-R, impulsivity
+(Imp.) from (BIS-11), sensation seeking (SS) from (ImpSS), level of education (Edu.),
+age, gender, country of residence, and ethnicity. The data set contains information on
+the consumption of 18 central nervous system psychoactive drugs including alcohol,
+amphetamines, amyl nitrite, benzodiazepines, cannabis, chocolate, cocaine, caffeine,
+crack, ecstasy, heroin, ketamine, legal highs, LSD, methadone, magic mushrooms
+(MMushrooms), nicotine, and Volatile Substance Abuse (VSA), and one fictitious drug
+(Semeron) which was introduced to identify over-claimers.
+\newpage
+Participants selected for
+each drug either they never used this drug, used it over a decade ago, or in the last decade, year, month, week, or day.[2]''
+
+
+
+\subsection{Dataset Overview}
+\hspace{1cm}To ensure the reliability of the self-reported data, the survey included a fabricated drug as a control measure. Participants who reported using this nonexistent drug were flagged as providing potentially unreliable responses. Such compromised data samples were excluded from the dataset. After a rigorous filtering process, the final dataset consisted of 1,885 valid samples.
+
+\subsubsection{General traits}
+\hspace{1cm}The dataset includes key demographic and socio-cultural traits such as gender, age, education, country of origin, and ethnicity. 
+
+\hspace{1cm}Gender distribution is nearly balanced, with 943 males and 942 females. A significant majority (93.7\%) of participants are native English speakers, predominantly from the UK (55.4\%), the USA (29.5\%), and Canada (4.6\%), with smaller representations from other English-speaking nations. In terms of ethnicity, the sample is predominantly white (91.2\%), with minimal representation from other racial or ethnic groups.
+
+\hspace{1cm}The age distribution of the dataset is as follows: 34.1\% of participants are aged 18–24, 25.5\% are aged 25–34, 18.9\% are aged 35–44, 15.6\% are aged 45–54, 4.9\% are aged 55–64, and 1\% are aged over 65. The samples demonstrate a high level of educational attainment, with 59.5\% of participants achieving at least a degree or professional certification. Specifically, 14.4\% reported holding a professional certificate or diploma, 25.5\% an undergraduate degree, 15\% a master’s degree, and 4.7\% a doctorate. Additionally, 26.8\% reported some college or university education without earning a certificate, while 13.6\% had left formal education by the age of 18 or earlier.
+
+
+
+\subsubsection{Personality Measurements}
+\hspace{1cm}To assess the personality traits of the participant, the Revised NEO Five-Factor Inventory (NEO-FFI-R) questionnaire was used. The NEO-FFI-R is a widely validated and reliable instrument designed to measure five basic personality domains. The internal consistencies for the factors are as follows: Neuroticism = 0.84, Extraversion = 0.78, Openness to Experience = 0.78, Agreeableness = 0.77, and Conscientiousness = 0.75 [3]. 
+
+The five traits can be described as follows:
+\begin{enumerate}
+    \item \textit{Neuroticism} is a trait that indicates an individual's emotional stability. It is commonly characterized by negative emotions, difficulty with self-regulation (struggling to manage impulses), challenges in handling stress, heightened reactions to perceived threats, and a tendency to complain [4].
+    \item \textit{Extraversion} is ``a personality trait dimension characterized by the extent to which a person engages with the external world and derives energy from interacting with others. [5]''
+    \item \textit{Openness to Experience} ``refers to the tendency to explore, seek, and attend to external and internal sensory stimulation and abstract information. [6]''
+    \item \textit{Agreeableness} ``can be operationalized as friendliness, warmth, and cooperativeness within social interaction and interpersonal relationships. [7]''
+
+    \newpage
+
+    \item{}\textit{Conscientiousness} is the personality trait of being responsible, careful, or diligent. Conscientiousness implies a desire to do a task well, and to take obligations to others seriously [8].
+\end{enumerate}
+
+Additional measurements that are used are:
+\begin{enumerate}
+    \item \textit{Sensation seeking}: The tendency to pursue new and different sensations, feelings, and experiences [9]. 
+    \item \textit{Impulsivity} is tendency to act prematurely, with adverse consequences, or without sufficient evidence to make a decision [10].
+\end{enumerate}
+
+
+\subsubsection{Drug Usage}
+\hspace{1cm}Participants were surveyed regarding their use of 18 substances, both legal and illegal. These included alcohol, amphetamines, amyl nitrite, benzodiazepines, cannabis, chocolate, cocaine, caffeine, crack, ecstasy, heroin, ketamine, legal highs, LSD, methadone, magic mushrooms, nicotine, and volatile substance abuse (VSA). Additionally, a fictitious drug, Semeron, was included to identify participants who might exaggerate their drug use [2].
+
+For each substance, participants were asked to select the class corresponding to their usage history, specifying whether they had:
+\begin{enumerate}
+    \setcounter{enumi}{-1} % Set the counter to 4 (next item will be 5)
+    \item CL -  never used the drug,
+    \item CL - used it over a decade ago,
+    \item CL - used it within the last decade,
+    \item CL - used it within the last year,
+    \item CL - used it within the last month,
+    \item CL - used it within the last week,
+    \item CL - used it within the last day.
+    
+\end{enumerate}
+
+\subsection{Previous Research}
+
+\hspace{1cm}This dataset has primarily been used for risk evaluation, focusing on predicting the likelihood of drug use based on general demographic traits and personality characteristics. Research utilizing this dataset has shown that individuals who engage in drug use tend to score higher on Neuroticism (N) and lower on Agreeableness (A) and Conscientiousness (C). Detailed analyses have been performed to investigate the average differences between users and non-users across 18 substances. Furthermore, the study offered deeper insights into the relationships between personality traits, biographical information, and the patterns of use associated with specific drugs or drug clusters by individual participants [2]. 
+
+\hspace{1cm}Aditionally, the study further revealed that the significance of personality traits and demographic factors varies across different drugs. For example, the predictors of alcohol use differed from those for cannabis or cocaine, highlighting the complexity of drug consumption patterns. Specific attributes like openness, neuroticism, and extraversion were more relevant for predicting certain substances, while others were influenced by a mix of traits. This suggests that drug use is not solely determined by broad psychological profiles but may depend on a combination of factors unique to each substance or user group [2].
+
+\newpage
+
+\section{Initial Data Analysis}
+\subsection{Bias list}
+Establishing a bias list before processing data is an important step in ensuring that data analysis remains as objective and unbiased as possible. Recognizing and addressing potential biases early on helps prevent affected results, inaccurate conclusions, and misleading interpretations. 
+
+\textbf{General}
+\begin{itemize}
+    \item \textbf{Age} - Younger generations tend to use more drugs.
+    \item \textbf{Gender} - Drug usage is evenly distributed across genders.
+    \item \textbf{Education} - Drug use tends to be higher among individuals with lower levels of education.
+    \item \textbf{Country} - The UK and the USA have similar proportions of drug users.
+    \item \textbf{Neuroticism}, \textbf{Extraversion}, \textbf{Openness to Experience}, \textbf{Agreeableness}, \textbf{Impulsiveness}, and \textbf{Sensation Seeking} - Higher scores in these traits are associated with a higher likelihood of drug use.
+    \item \textbf{Conscientiousness} - Higher scores are associated with a lower likelihood of drug use.
+\end{itemize}
+
+\textbf{Cannabis-related}
+\begin{itemize}
+    \item \textbf{Country} - Cannabis usage is significantly influenced by the legalization status of the substance in a given country. In regions where cannabis is legalized, usage tends to be higher, while in countries where it remains illegal, usage may be underreported due to fear of legal repercussions.
+    \item \textbf{Gender} - Men are more likely to use cannabis than women.
+    \item \textbf{Cultural Stigma} - In certain countries, cannabis use may be heavily stigmatized, discouraging individuals from openly acknowledging their usage. 
+    \item \textbf{Correlation with Personal Traits} - Cannabis use is highly correlated with personal traits.
+    \item \textbf{Age} - Cannabis usage is typically higher among younger individuals, especially in the age group of 18-34 years. 
+    \item \textbf{Socioeconomic Status} - People from lower socioeconomic backgrounds are often found to have higher rates of cannabis use. 
+
+
+    \item \textbf{Perceived Risk} - The perception of risk associated with cannabis use varies by country, with lower perceived risks often leading to higher usage rates.
+    \item \textbf{Media Representation} - Media portrayal of cannabis use, whether positive or negative, can influence public perception and consumption. 
+\end{itemize}
+
+\newpage
+
+\subsection{Data Preparation}
+\hspace{1cm}In order to fully comprehend the data within the "Drug Consumption Quantified" dataset, it is essential to transform the dataset into a more interpretable format. This process begins with changing the encrypted or cryptic headers into more readable and descriptive labels. By converting these coded column names into informative feature names, the dataset becomes more accessible, enabling researchers to more easily analyze and interpret the underlying patterns. 
+
+To make the dataset easier to analyze, standardized values are encoded as follows:
+\begin{enumerate}
+    \item Psychological Test Scores: Higher scores on psychological tests should correspond to a stronger reflection of the specific trait being measured. For example, higher scores on Neuroticism (N) indicate a higher level of neuroticism, while higher scores on Openness (O) suggest greater openness to new experiences. These scores should be interpreted as more directly aligning with the personality trait.
+
+    \item Drug Use Frequency: In this dataset, a higher numerical value for drug usage indicates more recent consumption. For instance, a higher score might correspond to drug use within the past week, month, or year. This encoding enables clearer insights into the recency of drug use patterns.
+
+\end{enumerate}
+    
+Encoding these values in this way makes the dataset more accessible, improving the analysis and interpretation of both psychological traits and drug consumption patterns.
+
+\hspace{1cm}The dataset is well-suited for data visualization as many features are already in appropriate formats (e.g., strings and integers). However, for machine learning, numerical values are necessary. For features with natural progression (e.g., age, education), we convert them to integers. For categorical features without natural progression, dummy variables are created. Gender is binary, so it is encoded as a 0 or 1. This transformation ensures that the dataset is ready for analysis and machine learning models.
+
+\subsection{Analysis}
+
+\subsubsection{Data Distribution}
+\hspace{1cm}In order to proceed further, it is essential to develop a comprehensive understanding of the dataset. Examining the distribution of data is a crucial first step. Specifically, the distribution of personality measurements warrants close inspection. Notably, many features exhibit a Gaussian-like distribution. However, one distinctive observation is that sensation seeking predominantly shows the highest possible scores, deviating from the general pattern (Fig. 1).
+
+\hspace{1cm}
+A high score in sensation seeking indicates a strong tendency toward pursuing novel, intense, and stimulating experiences. Individuals with this trait are often more inclined to take risks and may exhibit a preference for activities that provide immediate gratification, sometimes without fully considering the consequences. In the context of this study, high sensation-seeking scores are particularly relevant as they are closely associated with a higher likelihood of experimenting with drugs.
+\newpage
+
+Individuals with high sensation-seeking scores could significantly influence the observed relationships between personality traits and drug use. Their predisposition for novelty may not only increase the probability of experimentation but also shape the patterns of substance choice, favoring drugs known for their intense effects, such as stimulants or psychedelics. 
+
+
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=16cm]{Python/PNG/psychological_tests_histograms (2).png}
+    \caption{\textbf{Fig. 1: Distribution of personality measurements
+}}
+\end{figure}
+
+
+\hspace{1cm} To gain meaningful insights into the dataset, analyzing the distribution of drug usage among participants is a crucial step. Understanding how different drugs are used across the population will provide a foundation for exploring patterns, trends, and correlations with other factors such as personality traits and demographic information. This analysis can reveal whether certain substances are more commonly used than others.
+
+Such distribution analysis can also shed light on outlier behaviors or substances with extreme usage patterns, which might warrant special attention. For example, some drugs may have higher usage among specific demographic or personality profiles, suggesting targeted areas of interest for further research. Conversely, low prevalence of certain substances could limit the statistical power of any analysis related to them and may require grouping substances into broader clusters for a more comprehensive study.
+
+\hspace{1cm}The data reveals clear differences between substances that are widely consumed, like Caffeine, Chocolate, and Alcohol, and those that are less commonly used, such as Heroin, Crack, and Ketamine. The usage of substances like Caffeine and Alcohol tends to be higher, possibly due to their social acceptance or accessibility, while substances like Heroin and Ecstasy show lower usage, possibly due to their stigma, perceived risk, or legal status. The Median values for many substances are close to 0, further emphasizing that many respondents report little or no usage, resulting in skewed distributions. The discrepancy between the Arithmetic Mean and Mode, with some substances showing higher means than modes, underscores that a portion of the population engages in frequent use, but many others report no usage at all (Tab. 1).
+
+\newpage
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=16cm]{Python/PNG/drug_histograms.png}
+    \caption{\textbf{Fig. 2: Distribution of drug usage
+}}
+\end{figure}
+
+\vspace{1.5cm}
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|S[round-mode=places,round-precision=1]|S[round-mode=places,round-precision=0]|c|c|}
+\hline
+\textbf{Substance Name} & \textbf{Arithmetic Mean} & \textbf{Median} & \textbf{Mode} & \textbf{Max Occurrence of Mode} \\ \hline
+Alcohol & 4.634820 & 5 & 5 & 758 \\ \hline
+Amphetamine & 1.340234 & 0 & 0 & 976 \\ \hline
+Amyl nitrite & 0.607219 & 0 & 0 & 1304 \\ \hline
+Benzodiazepine & 1.464968 & 0 & 0 & 1000 \\ \hline
+Caffeine & 5.483546 & 6 & 6 & 1384 \\ \hline
+Cannabis & 2.990977 & 3 & 6 & 463 \\ \hline
+Chocolate & 5.106688 & 5 & 6 & 807 \\ \hline
+Cocaine & 1.161890 & 0 & 0 & 1037 \\ \hline
+Crack & 0.297771 & 0 & 0 & 1626 \\ \hline
+Ecstasy & 1.314756 & 0 & 0 & 1020 \\ \hline
+Heroin & 0.374204 & 0 & 0 & 1604 \\ \hline
+Ketamine & 0.569533 & 0 & 0 & 1489 \\ \hline
+Legal highs & 1.356688 & 0 & 0 & 1093 \\ \hline
+LSD & 1.062102 & 0 & 0 & 1068 \\ \hline
+Meth & 0.826964 & 0 & 0 & 1428 \\ \hline
+Mushrooms & 1.187898 & 0 & 0 & 981 \\ \hline
+Nicotine & 3.201168 & 3 & 6 & 610 \\ \hline
+Semeron & 0.009554 & 0 & 0 & 1876 \\ \hline
+Volatile substance abuse & 0.433652 & 0 & 0 & 1454 \\ \hline
+\end{tabular}
+\caption{\textbf{Tab. 1: Statistics of Substance Usage}}
+\label{tab:substance_usage}
+\end{table}
+\newpage
+
+
+
+\subsubsection{Drug Use Categorization}
+
+To improve clarity and better align with the nature of the data, the categories can be renamed as follows:
+\begin{itemize}
+
+\item \textbf{Recent Use}: This category includes individuals who reported using a drug within the past month. It encompasses those who selected categories CL4, CL5, or CL6, indicating usage within the last month, week, or day.
+
+\item \textbf{Distant Use}: This category includes individuals who reported using the drug more than a month ago, or those who have never used it. It corresponds to categories CL0, CL1, CL2 and CL3, representing either distant use or no use at all.
+
+\end{itemize}
+These revised names clearly reflect the time-based distinction between more recent use and past or non-use, enhancing the comprehensibility of the categorization for further analysis. From now on this will be the main naming.
+
+From now on, \textit{Recent Use} and \textit{Distant Use} will be the main categories used for categorizing drug usage in the dataset. These terms will be consistently applied throughout the analysis to distinguish between individuals who have used a drug recently and those who have either used it in the past or never used it at all. 
+
+\subsubsection{Cannabis Distribution}
+
+\hspace{1cm}The data distribution (Fig 1) shows that cannabis has the most neutral distribution compared to all the other substances presented in the study. A significant portion of participants (78\%), reported having used cannabis at some point in their lives. This high prevalence suggests that cannabis is one of the most commonly used substances in the sample.
+
+When examining the distribution between Recent Use and Distant Use, the figures are as follows: 789 participants are categorized as Recent Users, having used cannabis within the past month, while 1,096 participants are categorized as Distant Users, either having used cannabis more than a month ago or never having used it at all. This suggests that, although cannabis is widely used, a substantial proportion of individuals either ceased using it in the past or have never engaged with it.
+
+\hspace{1cm}The distribution of users across demographic, personality, and socio-cultural features was analyzed based on drug usage categorization. This categorization highlights patterns that reflect the relationship between drug use and various traits, facilitating an understanding of behavioral and characteristic differences between the groups (Fig. 3).
+
+The results reveal distinct trends within the data. For instance, younger age groups exhibit a higher likelihood of recent drug use, while higher levels of educational attainment correspond to varying patterns of usage. Differences in personality traits show that high scores for \textit{Openess to experience}, \textit{Sensation Seeking} and \textit{Impusliveness} are more common among Recent Users, whereas higher \textit{Conscientiousness} scores are prevalent among Distant Users (Fig. 3).
+
+These findings provide valuable insights into the demographic and psychological profiles associated with drug use, contributing to a deeper understanding of usage behaviors and aiding future research and intervention strategies.
+\newpage
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=16cm]{Python/PNG/cannabis_users_distribution (1).png}
+    \caption{\textbf{Fig. 3: Cannabis Users Distribution}}
+\end{figure}
+
+
+\newpage
+\section{Exploratory Data analysis}
+
+\subsection{Corelations}
+
+\hspace{1cm}Before drawing any hypotheses or making conclusions from the data, it is essential to perform correlation testing. This step plays a crucial role in understanding the relationships between variables and validating the assumptions that will underpin further analysis. In simple terms, correlation testing helps identify whether and how strongly variables are related to one another, providing insights into patterns or trends that could suggest causal relationships.
+
+\vspace{1cm}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=16cm]{Python/PNG/Correlation_all (1).png}
+    \caption{\textbf{Fig. 4: Corelation map - all features}}
+\end{figure}
+
+\newpage
+
+The correlation test was performed using the \textbf{Pearson correlation coefficient}, which is a widely used statistical method to measure the linear relationship between two continuous variables. The Pearson correlation coefficient (r) ranges from -1 to +1, where:
+\begin{itemize}
+   \item +1 indicates a perfect positive linear relationship,
+    \item -1 indicates a perfect negative linear relationship,
+    \item 0 indicates no linear relationship between the variables.
+\end{itemize}
+
+\hspace{1cm}Correlation analysis reveals various potential connections, highlighting that certain drugs are correlated not only with personality traits and general characteristics but also with one another (Fig. 4). This additional perspective provides valuable insight into the drug-related issue and the factors influencing an individual's engagement with substances.
+
+What is particularly noteworthy is that most drugs appear to exhibit higher correlation coefficients with other drugs than with personality measurements. For cannabis, the highest correlation coefficient in personality measurements is observed for sensation seeking (0.47). However, five other drugs show higher correlation coefficients, with \textit{Mushrooms} recording the highest at 0.58 (Fig. 4).
+
+\hspace{1cm}Certain substances clearly stand apart from others, exhibiting very low correlation coefficients across all measured features (Fig. 4). These substances include legal drugs such as \textit{Alcohol}, \textit{Caffeine}, and \textit{chocolate}. Their low correlation suggests that their use may not be strongly influenced by the same personality traits or general features that are observed with other, more potent drugs. One notable factor is the widespread and frequent use of these substances among the subjects, which can be seen in the distribution plot (Fig. 2). 
+
+Additionally, one particular substance stands out as distinctly different from all others: \textit{Semeron} (Fig. 4). The distribution of its values reveals that every sample has a Semeron score of 0, which is an anomaly in the dataset (Fig. 2). This is due to the special role that Semeron played in the survey. It was intentionally included as a control measure to detect whether participants were providing false or inconsistent answers. Semeron is not a real drug, but rather a fictitious substance created specifically for the purpose of verifying the integrity of the survey responses. 
+
+Low correlation coefficients and some degree of redundancy are evident in the features derived from ethnicity and country (Fig.4). These features were created using dummy variables, and the distribution analysis reveals that the majority of the samples are concentrated in just a few categories—specifically, the UK and the USA for country, and White for ethnicity (Fig. 2). This skewed distribution suggests that these features have limited variability, with very few samples representing other countries or ethnic groups. As a result, the low correlation may reflect the lack of diversity in these categories, making it difficult to draw meaningful connections between ethnicity, country, and other measured features.
+
+
+\hspace{1cm}The confrontation of the correlation heatmap with the listed biases (page 6) reveals some surprising differences. One of the most notable is the correlation score for education level. It may seem unexpected that education level does not show a strong relationship with drug usage, as one might assume that higher or lower education could influence substance consumption patterns.
+
+Another noteworthy finding is the correlation with extraversion. Despite being a prominent personality trait, extraversion does not appear to have a strong association with drug use in this dataset. This observation could suggest that factors other than personality traits might play a more significant role in determining drug usage patterns.
+
+
+\newpage
+\subsection{Drawing hypothesis}
+
+\hspace{1cm}The analysis uncovers an intriguing relationship between cannabis use and the use of other drugs. This raises the question: Is cannabis use somewhat linked to the use of other substances? Exploring this connection further could provide compelling evidence in support of cannabis legalization.
+
+By connecting this research to prior studies, it becomes possible to compare risk analysis scores associated with cannabis use in the context of the influence of various drugs and personality traits. Looking at how these findings match up with the current dataset could provide useful new insights into the connections between different drug use behaviors. 
+
+Proposed Hypothesis: \textbf{Cannabis use can be accurately classified using drug usage patterns.}
+
+This hypothesis suggests that the correlation between drug use and cannabis consumption might be simmilar to that between cannabis use and certain personality characteristics, potentially providing a clearer basis for predicting cannabis usage trends.
+
+This analysis can also be a helpful tool in determining whether cannabis leads to the use of harder drugs.
+
+
+\section{Implementation and configuration of models}
+
+\subsection{Preparations}
+\subsubsection {Dataset Division}
+\hspace{1cm}The dataset was split into two main feature groups to simplify the analysis and comparison process. Testing our hypothesis will involve examining the scores from each feature group individually, allowing for a clearer understanding of how each group contributes to the overall prediction of cannabis use. By analyzing dataset scores, we aim to gather more specific evidence to support or challenge our hypothesis. Groups:
+\begin{itemize}
+
+\item General and Personality Traits Group (\textbf{A}):
+    This group consists of features derived from psychological evaluation and general traits. \newline Features: \textit{Age}, \textit{Gender}, \textit{Education}, \textit{Neuroticism}, \textit{Extraversion}, \textit{Openness to experience}, \textit{Agreeableness}, \textit{Conscientiousness}, \textit{Impulsiveness}, \textit{Sensation seeking}, \textit{Country\_UK}, \textit{Country\_USA}.
+
+\item Drugs Usage Group (\textbf{B}):
+    This group includes features reflecting the frequency of hard drug usage.
+    \newline Features: \textit{Cocaine}, \textit{Crack}, \textit{Ecstasy}, \textit{Heroin}, \textit{Ketamine}, \textit{Legal highs}, \textit{LSD}, \textit{Meth}, \textit{Mushrooms}, \textit{Nicotine}, \textit{Volatile substance abuse}.
+    \end{itemize}
+
+\newpage
+
+\subsubsection{Rejected Features}
+\hspace{1cm}In order to minimize redundancy and improve the quality of the analysis, several features were removed from the groups. These features were excluded due to factors such as low correlation with the target, a uniform distribution that offered little variation, or their lack of relevance to the research objectives.
+
+ 
+The following features were deemed unnecessary and therefore discarded:
+\textit{Alcohol}, \textit{Amyl nitrite}, \textit{Caffeine}, \textit{Chocolate}, \textit{Semeron}, \textit{Country\_Australia}, \textit{Country\_Canada}, \textit{Country\_New Zealand}, \textit{Country\_Other}, \textit{Country\_Republic of Ireland}, \textit{Ethnicity\_Asian}, \textit{Ethnicity\_Black},
+\textit{Ethnicity\_Mixed-Black/Asian}, \textit{Ethnicity\_Mixed-White/Asian},
+\textit{Ethnicity\_Mixed-White/Black},
+\textit{Ethnicity\_Other}, \textit{Ethnicity\_White}.
+
+\subsubsection{Feature Scalling}
+\hspace{1cm}In this case, feature scaling was deemed unnecessary, as all features were already within similar ranges (0-60 or 0-6). To confirm that scaling was redundant, tests were conducted to evaluate the impact of scaling on the results. The evaluation showed no significant improvement in performance, further supporting the decision to omit scaling from the analysis.
+
+\subsubsection{Data division}
+\hspace{1cm}The dataset (\textbf{A} and \textbf{B}) was divided into three distinct subsets: training, validation, and test data. The training set was allocated 60\% of the data, while the validation and test sets each received 20\%. This split ensures that the models are trained on a sufficient portion of the data, validated during the training process, and evaluated on an independent set.
+
+\subsection{Tools}
+
+\subsubsection{Classification Methods}
+
+\textbf{SVM - Support Vector Machine}
+
+``SVMs are commonly used within classification problems. They distinguish between two classes by finding the optimal hyperplane that maximizes the margin between the closest data points of opposite classes. The number of features in the input data determine if the hyperplane is a line in a 2-D space or a plane in a n-dimensional space. Since multiple hyperplanes can be found to differentiate classes, maximizing the margin between points enables the algorithm to find the best decision boundary between classes. This, in turn, enables it to generalize well to new data and make accurate classification predictions. The lines that are adjacent to the optimal hyperplane are known as support vectors as these vectors run through the data points that determine the maximal margin. [11]'' 
+
+ ``When the data is not linearly separable, kernel functions are used to transform the data higher-dimensional space to enable linear separation. This application of kernel functions can be known as the “kernel trick”, and the choice of kernel function, such as linear kernels, polynomial kernels, radial basis function (RBF) kernels, or sigmoid kernels, depends on data characteristics and the specific use case. [11]'' 
+\newpage
+
+
+
+\textbf{MLP - Mulit-layer Perceprton}
+
+\hspace{1cm}Multilayer Perceptron (MLP) is a type of neural network used for classification tasks. It consists of multiple layers of neurons, including an input layer, one or more hidden layers, and an output layer. Each neuron in the network is connected to the neurons in the previous and subsequent layers, and these connections have associated weights that are adjusted during the training process. MLP is trained using a process called backpropagation, where the network learns by minimizing the error between predicted and actual outputs.
+
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=7cm]{Python/PNG/multilayerperceptron_network.png}
+    \caption{\textbf{Fig 5. MLP}, Source:"https://scikit-learn.org/1.5/modules/neural\_networks\_supervised.html"}
+\end{figure}
+
+\vspace{1cm}
+
+\subsubsection{Best Classifier Parameters - Evaluation}
+
+
+\hspace{1cm}To evaluate the best-performing classifier for each group, Cross-Validation Analysis combined with the Grid Search algorithm was implemented.
+
+Cross-validation allows for testing model behavior on the entire training/validation dataset by splitting it into multiple folds. The model is trained and evaluated multiple times (based on the number of folds), with different data partitions used for training and validation in each iteration. This process ensures that all data points are used for both training and testing, helping to improve model robustness and resistance to data anomalies.
+
+\hspace{1cm}To determine the optimal hyperparameters, fold values of 3, 5, and 10 were tested during the cross-validation analysis. The results showed minimal variation in performance metrics across these different fold values, indicating that the dataset was well-balanced and representative. Based on these findings, a fold value of 5 was selected as the optimal procedure for model evaluation.
+
+The Grid Search algorithm was employed to systematically test various model parameters during the cross-validation process. This method allowed for the identification of the best parameter configurations to optimize model performance.
+
+\newpage
+
+\subsubsection{Result Evaluation}
+\hspace{1cm}To evaluate the performance of the classifier, accuracy was initially used as the primary metric. In cases where the results were similar across models, additional evaluation measures were implemented. To ensure a comprehensive assessment, additional metrics such as F1-score, recall, and precision were calculated.
+
+Due to the balanced distribution of classes within the dataset, the risk of the classifier favoring one class over another was minimized, ensuring a fair evaluation of model performance.
+
+
+
+
+\subsection{Procedure}
+
+\hspace{1cm}Two classification models will be developed using the General and Personality Traits Group (\textbf{A}) and the Drug Usage Group (\textbf{B}), respectively. The models will be evaluated based on their ability to predict cannabis use. The classifier will assign each sample to one of two classes: \textit{Recent Use} and \textit{Distant Use} (as described on page 10). The results will then be compared to assess the performance of each model.
+
+
+\textbf{Procedure Stages:} 
+
+\begin{enumerate} 
+\item \textbf{Define Feature Group and Classifier Type} - The feature group (A or B) and classifier type (MLP or SVM) are selected based on the requirements of the analysis.
+
+\item \textbf{Select Hyperparameter Search Space} - The range of hyperparameters to be tested during the model optimization process is identified and defined.
+
+\item \textbf{Optimize Hyperparameters} - Grid Search, in combination with cross-validation, is used to evaluate various hyperparameter combinations and identify the optimal set for model performance.
+
+\item \textbf{Build the Classifier Model} - After determining the optimal hyperparameters, the classifier model is constructed using the selected feature group and optimized parameters.
+
+\item \textbf{Test the Model} - The trained model is evaluated on a separate test dataset to assess its ability to generalize and ensure that it has not overfitted the training data.
+
+\item \textbf{Evaluate and Interpret Results} - The model’s performance is analyzed using metrics such as accuracy, precision, recall, and F1-score. This stage also includes visualizations like confusion matrices, ROC curves, and precision-recall curves to provide insights into the model's effectiveness and identify areas for improvement.
+
+\end{enumerate}
+
+
+
+\textbf{Streamlining Model Optimization and Evaluation}
+
+To ensure a user-friendly and efficient procedure, the majority of the process was automated.
+
+\begin{itemize} \item To streamline the identification of optimal configurations, a function utilizing GridSearchCV was implemented. This function generated sorted outputs of parameter combinations, listing top-performing configurations.
+
+\item An additional evaluation function was developed to produce comprehensive performance reports. Key outputs included:
+\begin{itemize}
+    \item Confusion Matrix
+    \item Precision-Recall Curve
+    \item ROC Curve
+\end{itemize}
+
+
+\end{itemize}
+
+
+\newpage
+
+\section{Results}
+
+\subsection{Hyperparameter Selection}
+
+\textbf{Personality Traits - Group A}
+% DRUG USE BEGIN
+\vspace{0.5cm}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Parameters}          & \textbf{Accuracy} & \textbf{Rank} \\ \hline
+C=4, kernel=poly             & 0.793615          & 1             \\ \hline
+C=8, kernel=poly             & 0.793606          & 2             \\ \hline
+C=0.1, kernel=linear         & 0.789659          & 3             \\ \hline
+C=4, kernel=linear           & 0.787015          & 4             \\ \hline
+C=8, kernel=linear           & 0.786350          & 5             \\ \hline
+C=8, kernel=rbf              & 0.785642          & 6             \\ \hline
+C=4, kernel=rbf              & 0.773041          & 7             \\ \hline
+C=0.1, kernel=poly           & 0.732587          & 8             \\ \hline
+C=0.1, kernel=rbf            & 0.621113          & 9             \\ \hline
+\end{tabular}
+\caption{\textbf{Tab. 2}: SVM Results for Group A Classifier}
+\label{tab:svm_hard_drugs}
+\end{table}
+
+
+
+\vspace{1cm}
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Parameters}                                & \textbf{Accuracy} & \textbf{Rank} \\ \hline
+hidden\_layer\_sizes=(5, 5), max\_iter=200, solver=lbfgs  & 0.796933          & 1             \\ \hline
+hidden\_layer\_sizes=(10, 7), max\_iter=200, solver=lbfgs & 0.794924          & 2             \\ \hline
+hidden\_layer\_sizes=(10, 7), max\_iter=700, solver=lbfgs & 0.785008          & 3             \\ \hline
+hidden\_layer\_sizes=(10, 7), max\_iter=200, solver=adam  & 0.784341          & 4             \\ \hline
+hidden\_layer\_sizes=(10, 7), max\_iter=500, solver=adam  & 0.782322          & 5             \\ \hline
+hidden\_layer\_sizes=(10, 7), max\_iter=700, solver=adam  & 0.781677          & 6             \\ \hline
+hidden\_layer\_sizes=(5, 5), max\_iter=500, solver=adam   & 0.775723          & 7             \\ \hline
+hidden\_layer\_sizes=(10, 7), max\_iter=500, solver=sgd   & 0.769734          & 8             \\ \hline
+hidden\_layer\_sizes=(10, 7), max\_iter=200, solver=sgd   & 0.763726          & 9             \\ \hline
+hidden\_layer\_sizes=(5, 5), max\_iter=200, solver=sgd    & 0.741878          & 10            \\ \hline
+\end{tabular}
+\caption{\textbf{Tab. 3}: MLP Results for Group A Classifier}
+\label{tab:mlp_hard_drugs}
+\end{table}
+
+\vspace{1cm}
+
+Hyperparameters selected:
+
+\begin{itemize}
+    \item SMV classifier:
+    \begin{itemize}
+        \item kernel = poly,
+        \item C = 4.
+    \end{itemize}
+    \item MLP classifier:
+    \begin{itemize}
+        \item hidden layer size = (5, 5),
+        \item max iteration number = 200,
+        \item solver = lbfgs.
+    \end{itemize}
+\end{itemize}
+
+% DRUG USE END
+
+
+\newpage
+
+
+\textbf{Drug Use - Group B}
+
+\vspace{0.5cm}
+
+\begin{table}[h!]
+ \centering 
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Parameters}          & \textbf{Accuracy} & \textbf{Rank} \\ \hline
+C=4, kernel=rbf              & 0.804240          & 1             \\ \hline
+C=4, kernel=linear           & 0.794979          & 2             \\ \hline
+C=8, kernel=linear           & 0.794979          & 2             \\ \hline
+C=0.1, kernel=linear         & 0.793650          & 4             \\ \hline
+C=0.1, kernel=rbf            & 0.792308          & 5             \\ \hline
+C=8, kernel=rbf              & 0.787004          & 6             \\ \hline
+C=0.1, kernel=poly           & 0.769079          & 7             \\ \hline
+C=4, kernel=poly             & 0.765783          & 8             \\ \hline
+C=8, kernel=poly             & 0.764450          & 9             \\ \hline
+\end{tabular}
+\caption{\textbf{Tab. 4}: SVM Results for Group B Classifier}
+\label{tab:svm_personality}
+\end{table}
+
+\vspace{1cm}
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{Parameters}                                & \textbf{Accuracy} & \textbf{Rank} \\ \hline
+hidden\_layer\_sizes=(10, 7), max\_iter=500, solver=sgd   & 0.801615          & 1             \\ \hline
+hidden\_layer\_sizes=(5, 5), max\_iter=500, solver=adam  & 0.798942          & 2             \\ \hline
+hidden\_layer\_sizes=(10, 7), max\_iter=200, solver=adam & 0.792317          & 3             \\ \hline
+hidden\_layer\_sizes=(10, 7), max\_iter=700, solver=sgd  & 0.790992          & 4             \\ \hline
+hidden\_layer\_sizes=(5, 5), max\_iter=700, solver=adam  & 0.790981          & 5             \\ \hline
+hidden\_layer\_sizes=(5, 5), max\_iter=700, solver=sgd   & 0.787672          & 6             \\ \hline
+hidden\_layer\_sizes=(5, 5), max\_iter=200, solver=adam  & 0.787001          & 7             \\ \hline
+hidden\_layer\_sizes=(5, 5), max\_iter=700, solver=lbfgs & 0.786997          & 8             \\ \hline
+hidden\_layer\_sizes=(5, 5), max\_iter=500, solver=sgd   & 0.786990          & 9             \\ \hline
+hidden\_layer\_sizes=(5, 5), max\_iter=500, solver=lbfgs & 0.786333          & 10            \\ \hline
+\end{tabular}
+\caption{\textbf{Tab. 5}: MLP Results for Group B Classifier}
+
+\label{tab:mlp_personality}
+\end{table}
+
+\vspace{1cm}
+
+Hyperparameters selected:
+
+\begin{itemize}
+    \item SMV classifier:
+    \begin{itemize}
+        \item kernel = rbf,
+        \item C = 4.
+    \end{itemize}
+    \item MLP classifier:
+    \begin{itemize}
+        \item hidden layer size = (10, 7),
+        \item max iteration number = 500,
+        \item solver = sgd.
+    \end{itemize}
+\end{itemize}
+
+\newpage
+
+
+\subsection{Personality Traits (A) - Classifier Performance}
+
+\textbf{SVM}
+\begin{itemize}
+    \item Accuracy = 79.4\%
+    \item F1 Score = 75.4\%
+    \item Recall = 75.9\%
+    \item Precision = 75.1\%
+\end{itemize}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{Python/PNG/Traits_SVM_1.png}
+    \caption{\textbf{Fig. 6}: Personality Classisier SVM - Confusion Matrix}
+\end{figure}
+\vspace{1cm}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{Python/PNG/Traits_SVM_2.png}
+    \caption{\textbf{Fig. 7}: Personality Classisier SVM - ROC Curve}
+\end{figure}
+
+\newpage
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{Python/PNG/Traits_SVM_3.png}
+    \caption{\textbf{Fig. 8}: Personality Classisier SVM - Precision-Recall Curve}
+\end{figure}
+
+\vspace{1cm}
+
+\textbf{MLP}
+\begin{itemize}
+    \item Accuracy = 78.4\%
+    \item F1 Score = 75.8\%
+    \item Recall = 81.2\%
+    \item Precision = 71.3\%
+\end{itemize}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=10cm]{Python/PNG/Traits_MLP_1.png}
+    \caption{\textbf{Fig. 9}: Personality Classisier MLP - Confusion Matrix}
+\end{figure}
+\newpage
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=10cm]{Python/PNG/Traits_MLP_2.png}
+    \caption{\textbf{Fig. 10}: Personality Classisier MLP - ROC Curve}
+\end{figure}
+
+\vspace{1.5cm}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=10cm]{Python/PNG/Traits_MLP_3.png}
+    \caption{\textbf{Fig. 11}: Personality Classisier MLP - Precision-Recall Curve}
+\end{figure}
+
+
+\newpage
+\subsection{Drug Use (B) - Classifier Performance}
+
+\textbf{SVM}
+\begin{itemize}
+    \item Accuracy = 80.4\%
+    \item F1 Score = 76.4\%
+    \item Recall = 75.9\%
+    \item Precision = 76.9\%
+\end{itemize}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{Python/PNG/Drug_SVM_1.png}
+    \caption{\textbf{Fig. 12}: Drug Use Classisier SVM - Confusion Matrix}
+\end{figure}
+\vspace{1cm}
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{Python/PNG/Drug_SVM_2.png}
+    \caption{\textbf{Fig. 13}: Drug Use Classisier SVM - ROC Curve}
+\end{figure}
+
+\newpage
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=8cm]{Python/PNG/Drug_SVM_3.png}
+    \caption{\textbf{Fig. 15}: Drug Use Classisier SVM - Precision-Recall Curve}
+\end{figure}
+
+
+\vspace{1cm}
+
+
+\textbf{MLP}
+\begin{itemize}
+    \item Accuracy = 80.1\%
+    \item F1 Score = 76.5\%
+    \item Recall = 77.7\%
+    \item Precision = 75.6\%
+\end{itemize}
+
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=10cm]{Python/PNG/Drug_MLP_1.png}
+    \caption{\textbf{Fig. 16}: Drug Use Classisier MLP - Confusion Matrix}
+\end{figure}
+\newpage
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=10cm]{Python/PNG/Drug_MLP_2.png}
+    \caption{\textbf{Fig. 17}: Drug Use Classisier MLP - ROC Curve}
+\end{figure}
+
+\vspace{1.5cm}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=10cm]{Python/PNG/Drug_MLP_3.png}
+    \caption{\textbf{Fig. 18}: Drug Use Classisier MLP - Precision-Recall Curve}
+\end{figure}
+
+
+
+
+
+
+\newpage
+
+\subsection{Results - comparison}
+\begin{table}[h!]
+\centering
+\begin{tabular}{|l|l|c|c|c|c|}
+\hline
+\textbf{Dataset}     & \textbf{Model} & \textbf{Accuracy} & \textbf{F1}  & \textbf{Recall} & \textbf{Precision} \\ \hline
+Personality (A)         & SVM            & 79.4\%            & 75.4\%       & 75.9\%          & 75.1\%             \\ 
+                     & MLP            & 78.4\%            & 75.8\%       & 81.2\%          & 71.3\%             \\ \hline
+Hard Drugs (B)          & SVM            & 80.4\%            & 76.4\%       & 75.9\%          & 76.9\%             \\ 
+                     & MLP            & 80.1\%            & 76.5\%       & 77.7\%          & 75.6\%             \\ \hline
+\end{tabular}
+\caption{\textbf{Tab. 6}: Results for classifier group A and B}
+
+\end{table}
+
+\vspace{1cm}
+
+\hspace{1cm}The analysis indicates that both classifiers demonstrate comparable levels of accuracy. The classifier based on hard drug usage prsents slightly better performance; however, the improvement is not significant. Furthermore, both methods, SVM and MLP, yield similar results, highlighting minimal differences in their effectiveness.
+
+
+\vspace{1cm}
+
+\subsection{Additional Plots}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=13cm]{Python/PNG/pobrane.png}
+    \caption{\textbf{Fig. 19}: Use of drugs distribution based on cannabis use}
+\end{figure}
+
+\vspace{1cm}
+
+\hspace{1cm}This plot was created to provide an alternative perspective on overall drug use and the potential relationship between cannabis use and progression to harder drugs. Individuals with distant cannabis use do not exhibit a significant tendency toward consuming harder drugs. In cases of recent cannabis use, a slight inclination toward harder drug use can be observed, but the trend is not pronounced. Additionally, there are individuals who recently used cannabis but did not engage in the use of any other substances.
+
+\newpage
+
+\section{Summary and conclusions}
+
+\hspace{1cm}Regarding the hypothesis, the classifiers demonstrated similar levels of accuracy, supporting the validity of the hypothesis based on the analyzed data. Consequently, it can be concluded that there is a relationship between cannabis use and the consumption of other drugs. 
+\newline
+\textbf{Hypothesis - confirmed}
+
+\hspace{1cm}This study reveals a significant connection between cannabis use and the consumption of other drugs. The analysis shows that it is possible to predict cannabis use based on patterns of other substance use, supported by strong correlation values. These findings highlight a clear relationship between cannabis and hard drug consumption.
+
+However, these results have limited practical use in risk assessment. Estimating the likelihood of cannabis use among individuals who already use hard drugs offers little value, as the focus in such cases should be on the more harmful substances.
+
+The most valuable aspect of this research lies in its potential to contribute to discussions about whether cannabis use leads to the consumption of harder drugs. While the data show a relationship, additional evidence challenges the idea that cannabis is a gateway drug.
+
+Visual data (Fig. 19) suggest that many cannabis users never go on to use harder drugs, which supports the argument that cannabis does not inherently lead to more dangerous substance use. A key limitation of this study is the lack of detailed information on the timing and history of drug use, which is necessary to determine causality.
+
+\hspace{1cm}Despite these limitations, the findings strongly suggest that cannabis use alone is not a reliable predictor of hard drug consumption. To better understand these patterns, future research should focus on gathering longitudinal data and detailed drug use histories to explore the causal links between cannabis and other substances.
+
+
+\section{Acknowledgments and Contributions}
+
+
+
+\subsection{Additional Tools and Techniques}
+This project was made using several external tools and resources to ensure comprehensive analysis and documentation:
+\begin{itemize}
+    \item \textbf{ChatGPT}: Used for refining text grammar and form of the project report. The final text was reviewed and edited by team members.
+    \item \textbf{Data Visualization Libraries}: Python libraries such as \texttt{Matplotlib} and \texttt{Seaborn} were used extensively for generating visualizations and plots.
+\end{itemize}
+\newpage
+\subsection{Project Sources}
+The project codebase is available in a public GitHub repository:
+\begin{itemize}
+    \item Repository URL: \url{https://github.com/jadrzy/ProjectPythonForMachineLearning}
+    \item Contents: Includes scripts for data preprocessing, exploratory data analysis, machine learning model implementation, and report generation.
+\end{itemize}
+
+\subsection{Additional Materials and Support}
+The following resources and assistance were used during the project:
+\begin{itemize}
+    \item External data repositories: \textit{UCI Machine Learning Repository} for providing the dataset used in this study.
+    \item Code snippets and techniques: References to publicly available scripts on \url{https://stackoverflow.com} and GitHub repositories for specific Python functions and debugging.
+\end{itemize}
+
+\subsection{Contributions of Team Members}
+The contributions of each team member are detailed below:
+\begin{itemize}
+    \item \textbf{Hypothesis formulation}: Michał Napiórkowski, Jakub Zając, Jan Drzyzga
+    \item \textbf{Exploratory Data Analysis}: Michał Napiórkowski, Jakub Zając
+    \item \textbf{Model implementation and configuration}: Michał Napiórkowski, Jakub Zając
+    \item \textbf{Model testing}: Michał Napiórkowski, Jakub Zając
+    \item \textbf{Report writing}: Jan Drzyzga
+    \item \textbf{Project organization}: Jan Drzyzga
+    \item \textbf{Project results presentation}: Jan Drzyzga (including preparation and delivery of presentations)
+\end{itemize}
+
+
+\newpage
+\section{References}
+\begin{enumerate}
+    \item Elaine Fehrman, Vincent Egan, Evgeny Mirkes
+            Drug Consumption (Quantified)\newline
+            Available:\newline
+            https://archive.ics.uci.edu/dataset/373/drug+consumption+quantified
+
+    \item E. Fehrman, A.K. Muhammad, E.M. Mirkes, V. Egan, A.N. Gorban The            Five Factor           Model of personality
+            and evaluation of drug consumption risk. 2015
+    \item  Egan V. Individual differences and antisocial behaviour. In: Furnham A,
+        Stumm S, Petredies K, editors. Handbook of Individual Differences. Oxford:
+        Blackwell-Wiley; 2011: 512–537
+    \item Widiger T, Oltmanns J. Neuroticism is a fundamental domain of personality with enormous public health implications. World Psychiat. 2017: 144-145
+    \item Rod A. Martin, Thomas E. Ford The Psychology of Humor (Second Edition), Academic Press, 2018: 99-140
+    \item Carina Coulacoglou, Donald H. Saklofske Psychometrics and Psychological Assessment, Academic Press, 2017: 157-185
+    \item Yi-Yuan Tang, Rongxiang Tang, The Neuroscience of Meditation, Academic Press, 2020: 15-36
+    \item Thompson, E.R. Development and Validation of an International English Big-Five Mini-Markers, Personality and Individual Differences, 2008: 542–548.
+    \item Sensation-Seeking, Psychology Today
+    \newline Available: https://www.psychologytoday.com/intl/basics/sensation-seeking
+    \item L Passamonti, CJ Lansdall, JB Rowe The neuroanatomical and neurochemical basis of apathy and impulsivity in frontotemporal lobar degeneration, 2018: 14-20
+    \item What are support vector machines (SVMs)?, IBM, 2023 \newline
+    Available: https://www.ibm.com/topics/support-vector-machine
+\end{enumerate}
+
+\end{document}
